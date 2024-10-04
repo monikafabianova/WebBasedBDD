@@ -17,5 +17,5 @@
 Please refer to the [Issue Board](https://github.com/monikafabianova/WebBasedBDD/issues), select a task you are comfortable working on and assign it to yourself.
 
 
-## Pull requests
+## 🧲 Pull requests
 When you are done with your issue, create a pull request and ask anyone of us to review it. After that, it will be merged to the MAIN.
