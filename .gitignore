@@ -1,7 +1,11 @@
 /.metadata/
+/WebBasedSolution_GIT/dk.sdu.bdd.xtext.parent/.settings
 /WebBasedSolution_GIT/dk.sdu.bdd.xtext.parent/dk.sdu.bdd.xtext
+/WebBasedSolution_GIT/dk.sdu.bdd.xtext.parent/dk.sdu.bdd.xtext.examples
 /WebBasedSolution_GIT/dk.sdu.bdd.xtext.parent/dk.sdu.bdd.xtext.ide
 /WebBasedSolution_GIT/dk.sdu.bdd.xtext.parent/dk.sdu.bdd.xtext.parent
 /WebBasedSolution_GIT/dk.sdu.bdd.xtext.parent/dk.sdu.bdd.xtext.tests
 /WebBasedSolution_GIT/dk.sdu.bdd.xtext.parent/dk.sdu.bdd.xtext.ui
 /WebBasedSolution_GIT/dk.sdu.bdd.xtext.parent/dk.sdu.bdd.xtext.ui.tests
+/WebBasedSolution_GIT/dk.sdu.bdd.xtext.parent/dk.sdu.bdd.xtext.web/*._trace
+/WebBasedSolution_GIT/dk.sdu.bdd.xtext.parent/dk.sdu.bdd.xtext.web/*.xtendbin
