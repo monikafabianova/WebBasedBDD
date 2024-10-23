@@ -218,6 +218,44 @@ window.onload = () => {
 
     loadBlocks(currentTab, false);
 	onEntityEditorChange();
+
+	let editor = document.querySelector("#blockly-editor")
+	console.log(editor);
+	console.log(document.querySelector("div.blocklyToolboxDiv"));
+
+	// Step 1: Select the target element
+	const targetNode = editor;
+
+	// Step 2: Create a MutationObserver instance
+	const observer = new MutationObserver((mutationsList, observer) => {
+		// Step 3: Callback function to handle mutations
+		for (const mutation of mutationsList) {
+			if (mutation.type === 'childList') {
+				let toolbox = document.querySelector("div.blocklyToolboxContents");
+				let library = document.querySelector("#library");
+				if (toolbox && !library) {
+					library = document.createElement("span");
+					library.setAttribute("id", "library");
+					library.textContent = "Library";
+					toolbox.append(library);
+				}
+			}
+		}
+	});
+
+	// Step 4: Configure the observer
+	const config = {
+		childList: true,     // Observe direct children
+		attributes: true,    // Observe attribute changes
+		subtree: true        // Observe all descendants
+	};
+
+	// Start observing the target element
+	observer.observe(targetNode, config);
+
+	// Example: To stop observing later
+	// observer.disconnect();
+	
   }, 200)
 }
 
