@@ -50,4 +50,20 @@
       </div>
     </div>
   </body>
+
+  <template id="template__library-tabs">
+    <details>
+      <summary id="library-category" class="category">Library</summary>
+      <button id="scenarios-category" class="subcategory" type="button" onclick="toggleScenarioLibrary()">Scenarios</button>
+      <button id="steps-category" class="subcategory" type="button" onclick="toggleStepsLibrary()">Steps</button>
+    </details>
+  </template>
+
+  <template id="template__scenario-library">
+    <div id="scenario-library"></div>
+  </template>
+
+  <template id="template__steps-library">
+    <div id="steps-library"></div>
+  </template>
 </html>
