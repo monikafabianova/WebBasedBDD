@@ -205,7 +205,87 @@ if (scenarioTab != undefined)
 setEnabled(entitiesTab);
 setSelectionBorder(entitiesTab);
 
+function generateScenarios() {
+	let scenarios = {
+		"Robot picks bottle": 'Scenario: "Robot picks bottle"\nGiven \nWhen \nThen \n',
+		"Start machine": "model Start machine",
+		"Scenario 3": "scenario3 value goes here",
+		"Scenario 4": "scenario4 value goes here"
+	}
+
+	localStorage.setItem("scenarios", JSON.stringify(scenarios));
+}
+
+function getScenarios() {
+	return JSON.parse(localStorage.getItem("scenarios"));
+}
+
+function generateSteps() {
+	let steps = {
+		"when robot is ready": "when robot is ready",
+		"using bottle": "using bottle",
+		"when steady": "when steady"
+	}
+
+	localStorage.setItem("steps", JSON.stringify(steps));
+}
+
+function getSteps() {
+	return JSON.parse(localStorage.getItem("steps"));
+}
+
+function toggleScenarioLibrary() {
+	const library = document.querySelector("#scenario-library");
+	const stepsLibrary = document.querySelector("#steps-library");
+	if (!library.style.display || library.style.display === "none") {
+		library.style.display = "block";
+		// Close steps library
+		stepsLibrary.style.display = "none";
+	} else if (library.style.display === "block") {
+		library.style.display = "none";
+	}
+}
+
+function toggleStepsLibrary() {
+	const library = document.querySelector("#steps-library");
+	const scenarioLibrary = document.querySelector("#scenario-library");
+	if (!library.style.display || library.style.display === "none") {
+		library.style.display = "block";
+		// Close scenario library
+		scenarioLibrary.style.display = "none";
+	} else if (library.style.display === "block") {
+		library.style.display = "none";
+	}
+}
+
+function useScenario(key) {
+	const scenarios = getScenarios();
+	const value = scenarios[key];
+
+	const editor = getCurrentAceEditor()
+	const document = editor.env.document.doc
+	// Add new scenario
+	const current = document.getValue()
+	document.setValue(current + value);
+}
+
+function useStep(key) {
+	const steps = getSteps();
+	const value = steps[key];
+	
+	const editor = getCurrentAceEditor()
+	const document = editor.env.document.doc
+	// Add new step
+	const current = document.getValue()
+	document.setValue(current + value);
+}
+
 window.onload = () => {
+  // Artificially creates scenarios & steps for the purpose of 
+  // displaying, filtering and searching through them.
+  generateScenarios();
+  generateSteps();
+
   setTimeout (() => {
 	currentEditor = entities;
     for (let editor of editors) {
@@ -219,11 +299,9 @@ window.onload = () => {
     loadBlocks(currentTab, false);
 	onEntityEditorChange();
 
-	let editor = document.querySelector("#blockly-editor")
-	console.log(editor);
-	console.log(document.querySelector("div.blocklyToolboxDiv"));
 
 	// Step 1: Select the target element
+	const editor = document.querySelector("#blockly-editor2");
 	const targetNode = editor;
 
 	// Step 2: Create a MutationObserver instance
@@ -231,13 +309,69 @@ window.onload = () => {
 		// Step 3: Callback function to handle mutations
 		for (const mutation of mutationsList) {
 			if (mutation.type === 'childList') {
-				let toolbox = document.querySelector("div.blocklyToolboxContents");
-				let library = document.querySelector("#library");
-				if (toolbox && !library) {
-					library = document.createElement("span");
-					library.setAttribute("id", "library");
-					library.textContent = "Library";
-					toolbox.append(library);
+
+				const toolbox = editor.querySelector("div.blocklyToolboxContents");
+				const canvas = editor.querySelector("div.injectionDiv");
+				if (toolbox && canvas) {
+					let scenarioLibrary = document.querySelector("#scenario-library");
+					if (!scenarioLibrary) {
+						// Creates HTML scenario library panel from <template>
+						// Template: See index.html
+						const scenarioLibraryTemplate = document.querySelector("template#template__scenario-library");
+						const scenarioLibraryTemplateClone = scenarioLibraryTemplate.content.cloneNode(true);
+						canvas.appendChild(scenarioLibraryTemplateClone);
+
+						scenarioLibrary = document.querySelector("#scenario-library");
+						// Puts library right next to toolbox
+						const toolboxWidth = toolbox.offsetWidth;
+						scenarioLibrary.style.left = toolboxWidth;
+						
+						// Creates list of scenarios
+						const scenarios = getScenarios();
+						const list = document.createElement("ul");
+						list.classList.add("list__scenarios");
+						scenarioLibrary.append(list);
+						for (const sc in scenarios) {
+							if (scenarios.hasOwnProperty(sc)) {
+								const scenarioElement = document.createElement("li");
+								scenarioElement.classList.add("scenario");
+								scenarioElement.textContent = sc;
+								scenarioElement.onclick = () => useScenario(sc);
+								list.append(scenarioElement);
+							}
+						}
+
+						// Creates HTML steps library panel from <template>
+						// Template: See index.html
+						const stepsLibraryTemplate = document.querySelector("template#template__steps-library");
+						const stepsLibraryTemplateClone = stepsLibraryTemplate.content.cloneNode(true);
+						canvas.appendChild(stepsLibraryTemplateClone);
+
+						const stepsLibrary = document.querySelector("#steps-library");
+						// Puts library right next to toolbox
+						stepsLibrary.style.left = toolboxWidth;
+						
+						// Creates list of steps
+						const steps = getSteps();
+						const stepsList = document.createElement("ul");
+						stepsList.classList.add("list__steps");
+						stepsLibrary.append(stepsList);
+						for (const st in steps) {
+							if (steps.hasOwnProperty(st)) {
+								const stepElement = document.createElement("li");
+								stepElement.classList.add("step");
+								stepElement.textContent = st;
+								stepElement.onclick = () => useStep(st);
+								stepsList.append(stepElement);
+							}
+						}
+
+						// Creates HTML tabs in toolbar from <template>
+						// Template: See index.html
+						const libraryTemplate = document.querySelector("template#template__library-tabs");
+						const libraryTemplateClone = libraryTemplate.content.cloneNode(true);
+						toolbox.appendChild(libraryTemplateClone);
+					}
 				}
 			}
 		}
@@ -246,8 +380,6 @@ window.onload = () => {
 	// Step 4: Configure the observer
 	const config = {
 		childList: true,     // Observe direct children
-		attributes: true,    // Observe attribute changes
-		subtree: true        // Observe all descendants
 	};
 
 	// Start observing the target element
