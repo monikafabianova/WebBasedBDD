@@ -26,7 +26,7 @@ These entities should be put in the "Entities" editor for testing if Scenarios f
 
 There also needs to be `model robotic_domain` at the top of **"Entities"** editor and `model sample using robotic_domain` at the top of **"Scenarios"** editor
 
-// example 1
+```// example 1
 declarative entity robot {
 actions: moves, grabs, releases
 properties: position
@@ -64,4 +64,4 @@ properties: signal
 declarative entity gripper {
 states: open, closed
 actions: opens, closes
-}
+}```
