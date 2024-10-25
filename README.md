@@ -19,3 +19,49 @@ Please refer to the [Issue Board](https://github.com/monikafabianova/WebBasedBDD
 
 ## 🧲 Pull requests
 When you are done with your issue, create a pull request and ask anyone of us to review it. After that, it will be merged to the MAIN.
+
+## Examples
+
+These entities should be put in the "Entities" editor for testing if Scenarios from Library work correctly.
+
+There also needs to be `model robotic_domain` at the top of **"Entities"** editor and `model sample using robotic_domain` at the top of **"Scenarios"** editor
+
+// example 1
+declarative entity robot {
+actions: moves, grabs, releases
+properties: position
+}
+declarative entity object {
+states: grabbed, released
+}
+
+// example 2
+declarative entity robot {
+actions: moves, picks, releases
+properties: position
+}
+declarative entity object {
+states: sensed, sorted
+}
+declarative entity sensor {
+states: active, inactive
+}
+
+// example 3
+declarative entity robot {
+actions: moves, picks, releases
+properties: position, speed
+}
+declarative entity output {
+states: ON, OFF
+actions: activates, deactivates
+properties: position
+}
+declarative entity button {
+states: ON, OFF
+properties: signal
+}
+declarative entity gripper {
+states: open, closed
+actions: opens, closes
+}
