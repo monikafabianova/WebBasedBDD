@@ -214,28 +214,28 @@ function generateScenarios() {
 	const scenario6 = "PickAndPlace2";
 	
 	const scenarios = {
-		scenario1: `Scenario: "${scenario1}"\n
+		[scenario1]: `Scenario: "${scenario1}"\n
 		Given the position of the robot "Sun" is "START"\n
 		When the robot "Sun" moves to position "aboveObject"\n
 		And the robot "Sun" grabs the object "Bottle"\n
 		Then the object "Bottle" is grabbed\n`,
-		scenario2: `Scenario: "${scenario2}"\n
+		[scenario2]: `Scenario: "${scenario2}"\n
 		Given the object "Bottle" is grabbed\n
 		When the robot "Sun" moves to position "above bucket"\n
 		And the robot "Sun" releases the object "Bottle"\n
 		Then the object "Bottle" is released\n`,
-		scenario3: `Scenario: "${scenario3}"\n
+		[scenario3]: `Scenario: "${scenario3}"\n
 		Given the sensor "Sensor" is active\n
 		When the robot "Bob" picks the object "Ball"\n
 		And the robot "Bob" moves to position "SENSOR_AREA"\n
 		Then the object "Ball” is sensed\n`,
-		scenario4: `Scenario: "${scenario4}"\n
+		[scenario4]: `Scenario: "${scenario4}"\n
 		Given the color of the object "Ball" is "green"\n
 		And the sensor "Sensor" is active\n
 		When the robot "Bob" moves to position "GREEN_BUCKET"\n
 		And the robot "Bob" releases the object "Ball"\n
 		Then the object "Ball" is sorted\n`,
-		scenario5: `Scenario: "${scenario5}"\n
+		[scenario5]: `Scenario: "${scenario5}"\n
 		Given the output "light" is OFF\n
 		And the gripper "gripper" is closed\n
 		And the signal of the button "greenButton" is ON\n
@@ -244,7 +244,7 @@ function generateScenarios() {
 		And the gripper "gripper" opens\n
 		Then the position of the robot "Rob" is "aboveObject"\n
 		And the gripper "gripper" is open\n`,
-		scenario6: `Scenario: "${scenario6}"\n
+		[scenario6]: `Scenario: "${scenario6}"\n
 		Given the position of the robot "Rob" is "aboveObject"\n
 		And the gripper "gripper" is open\n
 		When the gripper "gripper" closes\n
@@ -432,14 +432,13 @@ window.onload = () => {
 						const stepsList = document.createElement("ul");
 						stepsList.classList.add("list__steps");
 						stepsLibrary.append(stepsList);
-						for (const st in steps) {
-							if (steps.hasOwnProperty(st)) {
-								const stepElement = document.createElement("li");
-								stepElement.classList.add("step");
-								stepElement.textContent = st;
-								stepElement.onclick = () => useStep(st);
-								stepsList.append(stepElement);
-							}
+
+						for (const step of steps) {
+							const stepElement = document.createElement("li");
+							stepElement.classList.add("step");
+							stepElement.textContent = step;
+							stepElement.onclick = () => useStep(step);
+							stepsList.append(stepElement);
 						}
 
 						// Creates HTML tabs in toolbar from <template>
