@@ -206,11 +206,54 @@ setEnabled(entitiesTab);
 setSelectionBorder(entitiesTab);
 
 function generateScenarios() {
-	let scenarios = {
-		"Robot picks bottle": 'Scenario: "Robot picks bottle"\nGiven \nWhen \nThen \n',
-		"Start machine": "model Start machine",
-		"Scenario 3": "scenario3 value goes here",
-		"Scenario 4": "scenario4 value goes here"
+	const scenario1 = "grabbing object";
+	const scenario2 = "moving object";
+	const scenario3 = "Sensing object";
+	const scenario4 = "Sorting object";
+	const scenario5 = "PickAndPlace1";
+	const scenario6 = "PickAndPlace2";
+	
+	const scenarios = {
+		scenario1: `Scenario: "${scenario1}"\n
+		Given the position of the robot "Sun" is "START"\n
+		When the robot "Sun" moves to position "aboveObject"\n
+		And the robot "Sun" grabs the object "Bottle"\n
+		Then the object "Bottle" is grabbed\n`,
+		scenario2: `Scenario: "${scenario2}"\n
+		Given the object "Bottle" is grabbed\n
+		When the robot "Sun" moves to position "above bucket"\n
+		And the robot "Sun" releases the object "Bottle"\n
+		Then the object "Bottle" is released\n`,
+		scenario3: `Scenario: "${scenario3}"\n
+		Given the sensor "Sensor" is active\n
+		When the robot "Bob" picks the object "Ball"\n
+		And the robot "Bob" moves to position "SENSOR_AREA"\n
+		Then the object "Ball” is sensed\n`,
+		scenario4: `Scenario: "${scenario4}"\n
+		Given the color of the object "Ball" is "green"\n
+		And the sensor "Sensor" is active\n
+		When the robot "Bob" moves to position "GREEN_BUCKET"\n
+		And the robot "Bob" releases the object "Ball"\n
+		Then the object "Ball" is sorted\n`,
+		scenario5: `Scenario: "${scenario5}"\n
+		Given the output "light" is OFF\n
+		And the gripper "gripper" is closed\n
+		And the signal of the button "greenButton" is ON\n
+		When the output "light" activates\n
+		And the robot "Rob" linearly moves to position "aboveObject"\n
+		And the gripper "gripper" opens\n
+		Then the position of the robot "Rob" is "aboveObject"\n
+		And the gripper "gripper" is open\n`,
+		scenario6: `Scenario: "${scenario6}"\n
+		Given the position of the robot "Rob" is "aboveObject"\n
+		And the gripper "gripper" is open\n
+		When the gripper "gripper" closes\n
+		And the robot "Rob" moves to position "placementLocation" with "fast” speed\n
+		And the gripper "gripper" opens\n
+		And the output "light" deactivates\n
+		Then the output "light" is OFF\n
+		And the position of the robot "Rob" is "placementLocation"\n
+		And the gripper "gripper" is open\n`
 	}
 
 	localStorage.setItem("scenarios", JSON.stringify(scenarios));
@@ -221,11 +264,44 @@ function getScenarios() {
 }
 
 function generateSteps() {
-	let steps = {
-		"when robot is ready": "when robot is ready",
-		"using bottle": "using bottle",
-		"when steady": "when steady"
-	}
+	const steps = [
+		// states
+		'the position of the robot "Sun" is "START"',
+		'the object "Bottle" is grabbed',
+		'the object "Bottle" is grabbed',
+		'the object "Bottle" is released',
+		'the sensor "Sensor" is active',
+		'the object "Ball” is sensed',
+		'the color of the object "Ball" is "green"',
+		'the sensor "Sensor" is active',
+		'the object "Ball" is sorted',
+		'the output "light" is OFF',
+		'the gripper "gripper" is closed',
+		'the signal of the button "greenButton" is ON',
+		'the position of the robot "Rob" is "aboveObject"',
+		'the gripper "gripper" is open',
+		'the position of the robot "Rob" is "aboveObject"',
+		'the gripper "gripper" is open',
+		'the output "light" is OFF',
+		'the position of the robot "Rob" is "placementLocation"',
+		'the gripper "gripper" is open',
+		// actions
+		'the robot "Sun" moves to position "aboveObject"',
+		'the robot "Sun" grabs the object "Bottle"',
+		'the robot "Sun" moves to position "above bucket"',
+		'the robot "Sun" releases the object "Bottle"',
+		'the robot "Bob" picks the object "Ball"',
+		'the robot "Bob" moves to position "SENSOR_AREA"',
+		'the robot "Bob" moves to position "GREEN_BUCKET"',
+		'the robot "Bob" releases the object "Ball"',
+		'the output "light" activates',
+		'the robot "Rob" linearly moves to position "aboveObject"',
+		'the gripper "gripper" opens',
+		'the gripper "gripper" closes',
+		'the robot "Rob" moves to position "placementLocation" with "fast” speed',
+		'the gripper "gripper" opens',
+		'the output "light" deactivates',
+	]
 
 	localStorage.setItem("steps", JSON.stringify(steps));
 }
