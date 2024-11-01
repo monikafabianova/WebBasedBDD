@@ -59,11 +59,15 @@
     </details>
   </template>
 
-  <template id="template__scenario-library">
-    <div id="scenario-library"></div>
+   <template id="template__scenario-library">
+    <div id="scenario-library">
+	<input id="searchBarLibrary" type="text" placeholder = "Search scenarios..." oninput = "searchBar('scenario','searchBarLibrary')" />
+	</div>
   </template>
 
-  <template id="template__steps-library">
-    <div id="steps-library"></div>
+ <template id="template__steps-library">
+    <div id="steps-library">
+	<input id="searchBarSteps" type="text" placeholder = "Search steps..." oninput = "searchBar('step','searchBarSteps')" />
+	</div>
   </template>
 </html>
