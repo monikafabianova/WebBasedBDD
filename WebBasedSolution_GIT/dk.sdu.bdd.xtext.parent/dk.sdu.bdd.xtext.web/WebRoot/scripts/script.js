@@ -670,4 +670,16 @@ function runScenario() {
   });
 }
 
+function searchBar(className, searchBarId){
+	let searchBarQuery = document.getElementById(searchBarId).value.toLowerCase();
+	let scenarios = document.getElementsByClassName(className);
+	let l = scenarios.length;
+	for (let i = 0; i < l; i++){
+		if (scenarios[i].textContent.toLowerCase().includes(searchBarQuery)){
+			scenarios[i].style.display = "block";
+		} else {
+			scenarios[i].style.display = "none";
+		}
+	}
+}
 
