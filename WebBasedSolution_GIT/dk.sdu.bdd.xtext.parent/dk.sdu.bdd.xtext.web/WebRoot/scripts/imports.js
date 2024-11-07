@@ -25,6 +25,20 @@ function getCurrentAceEditor() {
   }
 }
 
+function getEntitiesAceEditor() {
+  /*
+   * Returns the scenarios editor object.
+   */
+  return editors[1];
+}
+
+function getScenariosAceEditor() {
+  /*
+   * Returns the scenarios editor object.
+   */
+  return editors[0];
+}
+
 require(["webjars/ace/1.3.3/src/ace"], function() {
   require(["xtext/xtext-ace"], function(xtext) {
     editors = xtext.createEditor({
@@ -32,6 +46,7 @@ require(["webjars/ace/1.3.3/src/ace"], function() {
       syntaxDefinition: "xtext-resources/generated/mode-bdd",
       loadFromServer: false,
     });
+
     var scenarioServices = editors[0].xtextServices;
     var entityServices = editors[1].xtextServices;
     scenarioServices.editorContext.addServerStateListener(function(params) {
