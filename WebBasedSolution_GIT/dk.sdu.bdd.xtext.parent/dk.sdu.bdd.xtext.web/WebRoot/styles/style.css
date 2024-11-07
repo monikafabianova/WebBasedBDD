@@ -132,6 +132,8 @@ a:hover {
 .list__steps {
 	margin: 0;
 	padding: 0;
+	overflow-y: auto;
+	height: calc(100% - 2em);
 }
 
 .scenario,
