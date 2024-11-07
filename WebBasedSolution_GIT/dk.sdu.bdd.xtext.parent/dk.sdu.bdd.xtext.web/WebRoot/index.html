@@ -11,6 +11,7 @@
     <script src="./scripts/generators/bdd.js" defer></script>
     <script src="./scripts/generators/blockGenerator.js" defer></script>
     <script src="./scripts/script.js" defer></script>
+    <script src="./scripts/reuseModule.js" defer></script>
   </head>
   <body>
     <div class="container">
@@ -59,15 +60,37 @@
     </details>
   </template>
 
-   <template id="template__scenario-library">
+  <template id="template__scenario-library">
     <div id="scenario-library">
-	<input id="searchBarLibrary" type="text" placeholder = "Search scenarios..." oninput = "searchBar('scenario','searchBarLibrary')" />
-	</div>
+      <div style="margin: 1em 1em .5em 1em; display: flex; gap: .5em;">
+        <input id="searchBarLibrary" type="text" placeholder = "Search scenarios..." oninput = "searchBar('scenario','searchBarLibrary')" />
+        <select name="scenario_sorting" id="scenario_sorting" onchange="updateScenarios()" aria-placeholder="Sort by ...">
+          <option value="default" disabled selected>Sort by ...</option>
+          <option value="alphabetical">Alphabetical</option>
+          <option value="most_recent">Most recent</option>
+          <option value="most_used">Most used</option>
+        </select>
+      </div>
+    </div>
   </template>
 
  <template id="template__steps-library">
     <div id="steps-library">
-	<input id="searchBarSteps" type="text" placeholder = "Search steps..." oninput = "searchBar('step','searchBarSteps')" />
-	</div>
+      <div style="margin: 1em 1em .5em 1em; display: flex; gap: .5em;">
+        <input id="searchBarSteps" type="text" placeholder = "Search steps..." oninput = "searchBar('step','searchBarSteps')" />
+        <select name="steps_sorting" id="steps_sorting" onchange="updateSteps()" aria-placeholder="Sort by ...">
+          <option value="default" disabled selected>Sort by ...</option>
+          <option value="alphabetical">Alphabetical</option>
+          <option value="most_recent">Most recent</option>
+          <option value="most_used">Most used</option>
+        </select>
+        <select name="steps_filter" id="steps_filter" onchange="updateSteps()" aria-placeholder="Category">
+          <option value="default" disabled>Select a category</option>
+          <option value="all" selected>All</option>
+          <option value="action">Action</option>
+          <option value="state">State</option>
+        </select>
+      </div>
+    </div>
   </template>
 </html>
